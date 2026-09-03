@@ -1545,6 +1545,73 @@
       }
     }
 
+    /* ================= MOBILE LIGHTBOX FINAL FIX ================= */
+    @media(max-width:760px){
+      .lightbox{
+        padding:0;
+        overscroll-behavior:contain;
+        touch-action:manipulation;
+      }
+
+      .lightbox-dialog{
+        width:100vw;
+        height:100dvh;
+        max-height:100dvh;
+      }
+
+      .lightbox-stage{
+        padding:58px 14px 224px;
+      }
+
+      .lightbox-image{
+        max-width:calc(100vw - 28px);
+        max-height:calc(100dvh - 292px);
+      }
+
+      .lightbox-nav{
+        position:fixed;
+        top:50dvh;
+        z-index:30;
+        width:48px;
+        height:48px;
+        border:1px solid rgba(255,255,255,.35);
+        touch-action:manipulation;
+        -webkit-tap-highlight-color:transparent;
+      }
+
+      .lightbox-prev{
+        left:max(8px, env(safe-area-inset-left));
+      }
+
+      .lightbox-next{
+        right:max(8px, env(safe-area-inset-right));
+      }
+
+      .lightbox-close{
+        position:fixed;
+        top:max(10px, env(safe-area-inset-top));
+        right:max(10px, env(safe-area-inset-right));
+        z-index:35;
+        touch-action:manipulation;
+      }
+
+      .lightbox-meta{
+        bottom:max(8px, env(safe-area-inset-bottom));
+        z-index:25;
+        width:calc(100% - 16px);
+        max-width:500px;
+        padding:10px;
+      }
+
+      .lightbox-copy,
+      .lightbox-dm{
+        min-height:44px;
+        height:44px;
+        font-size:11px;
+        touch-action:manipulation;
+      }
+    }
+
     @media(prefers-reduced-motion:reduce){
       *,
       *::before,
@@ -2800,13 +2867,21 @@
     byId('lightboxPrev')
       .addEventListener(
         'click',
-        () => moveLightbox(-1)
+        event => {
+          event.preventDefault();
+          event.stopPropagation();
+          moveLightbox(-1);
+        }
       );
 
     byId('lightboxNext')
       .addEventListener(
         'click',
-        () => moveLightbox(1)
+        event => {
+          event.preventDefault();
+          event.stopPropagation();
+          moveLightbox(1);
+        }
       );
 
     byId('lightboxCopy')
@@ -2837,6 +2912,28 @@
 
         }
       );
+
+    /* Any tap inside the preview dialog must never close the lightbox. */
+    byId('imageLightbox')
+      .querySelector('.lightbox-dialog')
+      .addEventListener(
+        'click',
+        event => event.stopPropagation()
+      );
+
+    [
+      byId('lightboxPrev'),
+      byId('lightboxNext'),
+      byId('lightboxClose'),
+      byId('lightboxCopy'),
+      byId('lightboxDm')
+    ]
+      .filter(Boolean)
+      .forEach(button => {
+        ['pointerdown','touchstart'].forEach(type => {
+          button.addEventListener(type, event => event.stopPropagation(), {passive:true});
+        });
+      });
 
     /*
       Close only when the real dark backdrop itself is tapped.
