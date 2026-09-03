@@ -1,0 +1,11 @@
+Asterra Fleur Delete Fix v2
+
+Admin Delete Product now:
+- Finds the product by code.
+- Removes its storage image when available.
+- Deletes the products row by database id.
+- Refreshes the UI.
+
+It does NOT write to deleted_products and does NOT use ON CONFLICT/upsert in the frontend settings save path. This removes the unique-constraint error from the delete flow.
+
+After deployment, hard-refresh the website (Ctrl+Shift+R) to load the new index.html.

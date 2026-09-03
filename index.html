@@ -1,0 +1,4317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Asterra Fleur gallery.">
+  <title>Asterra Fleur</title>
+
+  <style>
+    :root{
+      --purple-950:#24102f;
+      --purple-900:#35154a;
+      --purple-800:#482061;
+      --purple-700:#63318c;
+      --purple-600:#7541a8;
+      --purple-500:#8d5bc2;
+      --purple-300:#cdb5e2;
+      --purple-200:#e4d6ef;
+      --purple-100:#f3ecf8;
+      --ink:#2c1936;
+      --muted:#735b80;
+      --line:#dfd1e8;
+      --surface:#fff;
+      --page:#faf7fc;
+      --shadow:0 12px 30px rgba(63,31,82,.10);
+    }
+
+    *{box-sizing:border-box}
+
+    html{
+      scroll-behavior:smooth;
+      -webkit-text-size-adjust:100%;
+      text-size-adjust:100%;
+    }
+
+    body{
+      margin:0;
+      overflow-x:hidden;
+      color:var(--ink);
+      font-family:"Segoe UI",Arial,sans-serif;
+      background:
+        radial-gradient(circle at 10% 0,rgba(225,205,242,.55),transparent 26rem),
+        radial-gradient(circle at 100% 18%,rgba(239,224,248,.65),transparent 22rem),
+        linear-gradient(180deg,#fcf9ff 0%,#f7f0fb 55%,#f0e7f6 100%);
+    }
+
+    body.lightbox-open{overflow:hidden}
+
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit}
+
+    .sr-only{
+      position:absolute;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
+
+    /* ================= HEADER ================= */
+
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:200;
+      background:linear-gradient(
+        100deg,
+        #291035 0%,
+        #482061 45%,
+        #7140a0 75%,
+        #8d5bc2 100%
+      );
+      border-bottom:1px solid rgba(255,255,255,.15);
+      box-shadow:0 10px 30px rgba(42,16,55,.22);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+    }
+
+    .nav{
+      display:grid;
+      grid-template-columns:auto minmax(270px,1fr) auto;
+      align-items:center;
+      gap:20px;
+      width:min(1180px,calc(100% - 28px));
+      min-height:100px;
+      margin:auto;
+      padding:10px 0;
+    }
+
+    .brand{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      min-width:max-content;
+      color:#fff;
+      text-decoration:none;
+    }
+
+    .brand img{
+      width:76px;
+      height:76px;
+      object-fit:contain;
+      flex:none;
+      filter:drop-shadow(0 8px 18px rgba(0,0,0,.20));
+    }
+
+    .brand-label{
+      display:grid;
+      gap:4px;
+    }
+
+    .brand strong{
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:25px;
+      letter-spacing:1.8px;
+      line-height:1;
+    }
+
+    .brand small{
+      color:#eadcf2;
+      font-size:9px;
+      font-weight:700;
+      letter-spacing:1.3px;
+      text-transform:uppercase;
+    }
+
+    /* SEARCH */
+
+    .global-search{
+      position:relative;
+      min-width:0;
+    }
+
+    .global-search svg{
+      position:absolute;
+      top:50%;
+      left:18px;
+      width:18px;
+      height:18px;
+      color:#80608e;
+      pointer-events:none;
+      transform:translateY(-50%);
+    }
+
+    .global-search input{
+      width:100%;
+      height:50px;
+      padding:0 48px;
+      color:var(--ink);
+      font-size:13px;
+      outline:none;
+      border:1px solid rgba(255,255,255,.24);
+      border-radius:999px;
+      background:rgba(255,255,255,.97);
+      box-shadow:0 10px 24px rgba(25,6,29,.16);
+    }
+
+    .global-search input::placeholder{
+      color:#a58eae;
+    }
+
+    .global-search input:focus{
+      border-color:#caa9df;
+      box-shadow:
+        0 0 0 4px rgba(234,216,247,.35),
+        0 12px 24px rgba(25,6,29,.16);
+    }
+
+    .clear-search{
+      position:absolute;
+      top:50%;
+      right:9px;
+      display:none;
+      width:30px;
+      height:30px;
+      padding:0;
+      color:var(--purple-700);
+      font-size:20px;
+      line-height:1;
+      border:0;
+      border-radius:50%;
+      background:var(--purple-100);
+      transform:translateY(-50%);
+    }
+
+    .clear-search.visible{display:block}
+
+    /* NAV BUTTONS */
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:7px;
+      min-width:0;
+    }
+
+    .order-link,
+    .admin-login-btn{
+      min-height:44px;
+      padding:0 14px;
+      color:#fff;
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:.04em;
+      white-space:nowrap;
+      border:1px solid rgba(255,255,255,.35);
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+    }
+
+    .order-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+    }
+
+    .order-link:hover,
+    .admin-login-btn:hover,
+    .order-link:focus-visible,
+    .admin-login-btn:focus-visible{
+      outline:none;
+      background:rgba(255,255,255,.24);
+      transform:translateY(-1px);
+    }
+
+    /* ================= MAIN ================= */
+
+    main{
+      width:min(1180px,calc(100% - 28px));
+      margin:0 auto;
+    }
+
+    .gallery-section{
+      padding:32px 0 70px;
+    }
+
+    .gallery-controls{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin:0 auto 30px;
+      padding:4px;
+    }
+
+    .gallery-filter{
+      min-width:220px;
+      min-height:56px;
+      padding:0 25px;
+      color:var(--purple-800);
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.04em;
+      border:1px solid var(--purple-200);
+      border-radius:999px;
+      background:#fff;
+      box-shadow:0 6px 18px rgba(76,40,99,.07);
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease,
+        background .2s ease;
+    }
+
+    .gallery-filter:hover,
+    .gallery-filter:focus-visible{
+      outline:none;
+      border-color:var(--purple-500);
+      box-shadow:0 12px 28px rgba(103,55,139,.16);
+      transform:translateY(-2px);
+    }
+
+    .gallery-filter.active{
+      color:#fff;
+      border-color:transparent;
+      background:linear-gradient(
+        120deg,
+        var(--purple-800),
+        var(--purple-500)
+      );
+      box-shadow:0 12px 28px rgba(91,43,126,.25);
+    }
+
+    .gallery-count{
+      display:none;
+      margin:-15px 0 20px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-align:center;
+      text-transform:uppercase;
+    }
+
+    .gallery-count.visible{display:block}
+
+    .catalogue-view{display:none}
+
+    .catalogue-view.active{
+      display:block;
+      animation:gallery-in .3s ease both;
+    }
+
+    @keyframes gallery-in{
+      from{
+        opacity:0;
+        transform:translateY(8px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    /* ================= PRODUCT GRID ================= */
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:18px;
+      align-items:start;
+    }
+
+    .product-card{
+      position:relative;
+      overflow:hidden;
+      aspect-ratio:1 / 1;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+      box-shadow:var(--shadow);
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+    }
+
+    .product-card:hover,
+    .product-card:focus-within{
+      z-index:1;
+      transform:translateY(-5px);
+      box-shadow:0 20px 42px rgba(64,31,82,.18);
+    }
+
+    .product-image-trigger{
+      display:block;
+      width:100%;
+      height:100%;
+      padding:0;
+      border:0;
+      background:#f4edf8;
+      cursor:zoom-in;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .product-image-trigger:focus-visible{
+      outline:3px solid #c9a5df;
+      outline-offset:-5px;
+    }
+
+    .product-card img{
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center center;
+      background:#f4edf8;
+      transition:
+        transform .45s ease,
+        filter .3s ease;
+    }
+
+    .product-card:hover img,
+    .product-card:focus-within img{
+      transform:scale(1.045);
+      filter:brightness(.94);
+    }
+
+    .product-card:after{
+      content:"Click to zoom";
+      position:absolute;
+      left:10px;
+      bottom:10px;
+      padding:6px 9px;
+      color:#fff;
+      font-size:9px;
+      font-weight:800;
+      letter-spacing:.04em;
+      border-radius:999px;
+      background:rgba(45,19,57,.76);
+      pointer-events:none;
+      opacity:0;
+      transform:translateY(7px);
+      transition:.2s ease;
+    }
+
+    .product-card:hover:after,
+    .product-card:focus-within:after{
+      opacity:1;
+      transform:none;
+    }
+
+    .empty{
+      grid-column:1/-1;
+      padding:48px 20px;
+      color:var(--muted);
+      font-size:14px;
+      font-weight:700;
+      text-align:center;
+      border:1px dashed #ccb7d9;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    /* ================= FOOTER ================= */
+
+    .site-footer{
+      padding:38px 16px 42px;
+      color:#fff;
+      background:linear-gradient(
+        145deg,
+        #6d3fa5 0%,
+        #35154a 100%
+      );
+    }
+
+    .footer-inner{
+      width:min(1180px,calc(100% - 24px));
+      margin:auto;
+      display:grid;
+      gap:18px;
+      place-items:center;
+      text-align:center;
+    }
+
+    .footer-brand{
+      display:grid;
+      gap:8px;
+    }
+
+    .footer-brand strong{
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:clamp(28px,4.5vw,42px);
+      letter-spacing:2px;
+      line-height:1;
+    }
+
+    .footer-brand span{
+      color:#eadcf2;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:1.5px;
+    }
+
+    .footer-order{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:54px;
+      padding:0 24px;
+      color:#fff;
+      font-size:13px;
+      font-weight:800;
+      text-decoration:none;
+      border:2px solid #fff;
+      border-radius:999px;
+      background:transparent;
+      transition:.2s ease;
+    }
+
+    .footer-order:hover,
+    .footer-order:focus-visible{
+      outline:none;
+      color:var(--purple-700);
+      background:#fff;
+      transform:translateY(-2px);
+    }
+
+    /* ================= LIGHTBOX ================= */
+
+    .lightbox{
+      position:fixed;
+      z-index:300;
+      inset:0;
+      display:grid;
+      place-items:center;
+      padding:18px;
+      visibility:hidden;
+      background:rgba(31,10,42,0);
+      opacity:0;
+      transition:
+        visibility 0s linear .3s,
+        background .3s ease,
+        opacity .3s ease;
+    }
+
+    .lightbox.is-open{
+      visibility:visible;
+      background:rgba(28,8,39,.94);
+      opacity:1;
+      transition-delay:0s;
+    }
+
+    .lightbox-dialog{
+      position:relative;
+      display:grid;
+      place-items:center;
+      width:min(1320px,100%);
+      height:min(100%,920px);
+      opacity:0;
+      transform:scale(.96) translateY(15px);
+      transition:
+        opacity .3s ease,
+        transform .3s cubic-bezier(.2,.75,.2,1);
+    }
+
+    .lightbox.is-open .lightbox-dialog{
+      opacity:1;
+      transform:scale(1) translateY(0);
+    }
+
+    .lightbox-stage{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      height:100%;
+      padding:25px 65px 190px;
+    }
+
+    .lightbox-image{
+      display:block;
+      width:auto;
+      height:auto;
+      max-width:min(100%,1180px);
+      max-height:calc(100vh - 230px);
+      max-height:calc(100dvh - 230px);
+      object-fit:contain;
+      object-position:center;
+      border-radius:14px;
+      box-shadow:0 28px 90px rgba(0,0,0,.5);
+      user-select:none;
+    }
+
+    .lightbox-close{
+      position:absolute;
+      top:4px;
+      right:4px;
+      z-index:10;
+      display:grid;
+      place-items:center;
+      width:48px;
+      height:48px;
+      padding:0;
+      color:#fff;
+      font-size:31px;
+      line-height:1;
+      border:1px solid rgba(255,255,255,.35);
+      border-radius:50%;
+      background:rgba(255,255,255,.12);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+
+    .lightbox-close:hover,
+    .lightbox-close:focus-visible{
+      outline:none;
+      background:#fff;
+      color:var(--purple-800);
+    }
+
+    .lightbox-nav{
+      position:absolute;
+      top:50%;
+      z-index:5;
+      display:grid;
+      place-items:center;
+      width:50px;
+      height:50px;
+      padding:0;
+      color:#fff;
+      font-size:26px;
+      font-weight:700;
+      border:0;
+      border-radius:50%;
+      background:linear-gradient(
+        135deg,
+        var(--purple-700),
+        var(--purple-900)
+      );
+      box-shadow:0 12px 30px rgba(0,0,0,.3);
+      transform:translateY(-50%);
+      transition:.2s ease;
+    }
+
+    .lightbox-nav:hover{
+      transform:translateY(-50%) scale(1.08);
+    }
+
+    .lightbox-prev{left:6px}
+    .lightbox-next{right:6px}
+
+    .lightbox-meta{
+      position:absolute;
+      left:50%;
+      bottom:14px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width:min(420px,calc(100% - 32px));
+      padding:13px;
+      border:1px solid #dcc9e8;
+      border-radius:17px;
+      background:rgba(255,255,255,.98);
+      box-shadow:0 18px 50px rgba(0,0,0,.25);
+      transform:translateX(-50%);
+    }
+
+    .lightbox-meta-copy{
+      display:grid;
+      gap:2px;
+      width:100%;
+      text-align:center;
+    }
+
+    .lightbox-meta-label{
+      color:#806d89;
+      font-size:9px;
+      font-weight:800;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+    }
+
+    .lightbox-code{
+      color:var(--purple-900);
+      font-size:17px;
+      font-weight:900;
+      letter-spacing:.1em;
+    }
+
+    .lightbox-actions{
+      display:flex;
+      flex-direction:column;
+      width:100%;
+      gap:8px;
+    }
+
+    .lightbox-copy,
+    .lightbox-dm{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      min-height:44px;
+      padding:0 14px;
+      color:#fff;
+      font-size:11px;
+      font-weight:800;
+      border:0;
+      border-radius:11px;
+      transition:.2s ease;
+    }
+
+    .lightbox-copy{
+      background:linear-gradient(
+        120deg,
+        var(--purple-700),
+        var(--purple-900)
+      );
+      box-shadow:0 8px 18px rgba(91,48,125,.20);
+    }
+
+    .lightbox-dm{
+      background:#fff;
+      color:var(--purple-700);
+      border:2px solid var(--purple-700);
+    }
+
+    .lightbox-copy:hover{
+      background:linear-gradient(
+        120deg,
+        var(--purple-600),
+        var(--purple-800)
+      );
+      transform:translateY(-1px);
+    }
+
+    .lightbox-dm:hover{
+      color:#fff;
+      background:var(--purple-700);
+      transform:translateY(-1px);
+    }
+
+    /* ================= ADMIN ================= */
+
+    .admin-overlay{
+      position:fixed;
+      inset:0;
+      z-index:500;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      background:rgba(31,10,42,.78);
+      backdrop-filter:blur(10px);
+    }
+
+    .admin-overlay.open{display:flex}
+
+    .admin-modal{
+      width:min(480px,100%);
+      max-height:90dvh;
+      overflow:auto;
+      padding:22px;
+      border:1px solid #ddc9e8;
+      border-radius:22px;
+      background:#fff;
+      box-shadow:0 30px 90px rgba(0,0,0,.35);
+    }
+
+    .admin-modal h2{
+      margin:0 0 5px;
+      color:var(--purple-900);
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:26px;
+    }
+
+    .admin-modal p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .admin-field{
+      display:grid;
+      gap:7px;
+      margin:12px 0;
+    }
+
+    .admin-field label{
+      color:var(--purple-800);
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .admin-field input,
+    .admin-field select{
+      width:100%;
+      min-height:44px;
+      padding:0 12px;
+      color:var(--ink);
+      font-size:13px;
+      border:1px solid #d8c6e1;
+      border-radius:10px;
+      background:#fff;
+      outline:none;
+    }
+
+    .admin-field input:focus,
+    .admin-field select:focus{
+      border-color:var(--purple-500);
+      box-shadow:0 0 0 3px rgba(141,91,194,.12);
+    }
+
+    .admin-actions{
+      display:flex;
+      gap:8px;
+      margin-top:16px;
+    }
+
+    .admin-primary,
+    .admin-secondary,
+    .admin-danger{
+      flex:1;
+      min-height:44px;
+      border:0;
+      border-radius:10px;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .admin-primary{
+      color:#fff;
+      background:linear-gradient(
+        120deg,
+        var(--purple-800),
+        var(--purple-500)
+      );
+    }
+
+    .admin-secondary{
+      color:var(--purple-800);
+      background:var(--purple-100);
+    }
+
+    .admin-danger{
+      color:#fff;
+      background:#b02f62;
+    }
+
+    .admin-error{
+      min-height:16px;
+      color:#b02f62;
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .admin-panel{
+      position:fixed;
+      z-index:450;
+      inset:0;
+      display:none;
+      overflow:auto;
+      background:#faf7fc;
+    }
+
+    .admin-panel.open{display:block}
+
+    .admin-panel-head{
+      position:sticky;
+      top:0;
+      z-index:2;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      color:#fff;
+      background:linear-gradient(
+        135deg,
+        var(--purple-900),
+        var(--purple-600)
+      );
+      box-shadow:0 8px 24px rgba(53,18,63,.18);
+    }
+
+    .admin-panel-head strong{
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:20px;
+    }
+
+    .admin-close{
+      width:40px;
+      height:40px;
+      color:#fff;
+      font-size:24px;
+      border:1px solid rgba(255,255,255,.3);
+      border-radius:50%;
+      background:rgba(255,255,255,.1);
+      cursor:pointer;
+    }
+
+    .admin-content{
+      width:min(980px,calc(100% - 24px));
+      margin:18px auto 40px;
+    }
+
+    .admin-tabs{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      margin-bottom:14px;
+    }
+
+    .admin-tab{
+      min-height:48px;
+      padding:0 8px;
+      color:var(--purple-800);
+      font-size:11px;
+      font-weight:800;
+      border:1px solid #dcc9e7;
+      border-radius:12px;
+      background:#fff;
+      cursor:pointer;
+    }
+
+    .admin-tab.active{
+      color:#fff;
+      border-color:transparent;
+      background:linear-gradient(
+        120deg,
+        var(--purple-800),
+        var(--purple-500)
+      );
+    }
+
+    .admin-view{
+      display:none;
+      padding:16px;
+      border:1px solid #e2d5e9;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 8px 24px rgba(74,29,85,.06);
+    }
+
+    .admin-view.active{display:block}
+
+    .admin-view h3{
+      margin:0 0 5px;
+      color:var(--purple-900);
+      font-size:17px;
+    }
+
+    .admin-view .hint{
+      margin:0 0 15px;
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .admin-item{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:9px;
+      border:1px solid #e1d5e8;
+      border-radius:12px;
+      background:#fcf9fe;
+      cursor:pointer;
+    }
+
+    .admin-item:hover{
+      background:#f8f2fb;
+    }
+
+    .admin-item img{
+      width:58px;
+      height:58px;
+      flex:0 0 58px;
+      object-fit:cover;
+      border-radius:9px;
+    }
+
+    .admin-item-copy{
+      min-width:0;
+      flex:1;
+    }
+
+    .admin-item-copy strong{
+      display:block;
+      color:var(--purple-900);
+      font-size:12px;
+    }
+
+    .admin-item-copy strong:after{
+      content:" • click to copy";
+      color:#a08ca9;
+      font-size:9px;
+      font-weight:600;
+    }
+
+    .admin-item-copy span{
+      display:block;
+      margin-top:3px;
+      color:var(--muted);
+      font-size:10px;
+      word-break:break-word;
+    }
+
+    .admin-badge{
+      display:inline-flex;
+      align-items:center;
+      min-height:22px;
+      padding:0 8px;
+      color:var(--purple-800);
+      font-size:9px;
+      font-weight:800;
+      border-radius:999px;
+      background:#eee2f7;
+    }
+
+    .settings-card{
+      padding:14px;
+      margin-top:12px;
+      border:1px solid #e1d5e8;
+      border-radius:14px;
+      background:#fcf9fe;
+    }
+
+    .settings-card h4{
+      margin:0 0 10px;
+      color:var(--purple-900);
+      font-size:13px;
+    }
+
+    .color-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:10px;
+      margin-bottom:12px;
+    }
+
+    .color-control{
+      display:grid;
+      gap:7px;
+      color:var(--muted);
+      font-size:10px;
+      font-weight:800;
+    }
+
+    .color-control input{
+      width:100%;
+      height:42px;
+      padding:3px;
+      border:1px solid #d8c5df;
+      border-radius:9px;
+      background:#fff;
+    }
+
+    .settings-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:8px;
+    }
+
+    .settings-stack{
+      grid-template-columns:1fr 1fr auto;
+    }
+
+    .settings-row input{
+      min-height:44px;
+      padding:0 12px;
+      border:1px solid #d8c5df;
+      border-radius:10px;
+      outline:none;
+    }
+
+    .settings-row input:focus{
+      border-color:var(--purple-500);
+      box-shadow:0 0 0 3px rgba(141,91,194,.12);
+    }
+
+    .folder-section{
+      display:grid;
+      gap:10px;
+      margin-bottom:18px;
+    }
+
+    .folder-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 12px;
+      color:var(--purple-800);
+      font-size:12px;
+      font-weight:800;
+      border-radius:10px;
+      background:var(--purple-100);
+    }
+
+    .folder-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:8px;
+    }
+
+    .folder-card{
+      overflow:hidden;
+      border:1px solid #e4d9ea;
+      border-radius:10px;
+      background:#fff;
+      cursor:zoom-in;
+      transition:.2s ease;
+    }
+
+    .folder-card:hover{
+      transform:translateY(-3px);
+      box-shadow:0 12px 24px rgba(70,35,90,.12);
+    }
+
+    .folder-card img{
+      display:block;
+      width:100%;
+      aspect-ratio:1;
+      object-fit:cover;
+    }
+
+    .folder-card div{
+      padding:6px;
+      color:var(--purple-800);
+      font-size:9px;
+      font-weight:800;
+      text-align:center;
+    }
+
+    .admin-empty{
+      padding:24px 10px;
+      color:var(--muted);
+      font-size:12px;
+      text-align:center;
+      border:1px dashed #d5c3df;
+      border-radius:12px;
+    }
+
+    .delete-form{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:8px;
+    }
+
+    .delete-form input{
+      min-height:44px;
+      padding:0 12px;
+      border:1px solid #d8c5df;
+      border-radius:10px;
+      font-size:13px;
+      text-transform:uppercase;
+    }
+
+    .delete-message{
+      margin-top:10px;
+      color:var(--purple-800);
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .upload-list,
+    .folder-list{
+      display:grid;
+      gap:10px;
+    }
+
+    /* ================= TABLET ================= */
+
+    @media(max-width:980px){
+      .nav{
+        grid-template-columns:auto 1fr auto;
+        gap:12px;
+      }
+
+      .brand img{
+        width:66px;
+        height:66px;
+      }
+
+      .brand strong{
+        font-size:20px;
+      }
+
+      .grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+      }
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media(max-width:760px){
+
+      html,
+      body{
+        width:100%;
+        max-width:100%;
+        overflow-x:hidden;
+      }
+
+      .site-header{
+        position:sticky;
+        top:0;
+        z-index:200;
+      }
+
+      .nav{
+        width:calc(100% - 18px);
+        min-height:0;
+        padding:9px 0;
+        grid-template-columns:minmax(0,1fr) auto;
+        gap:8px;
+      }
+
+      .brand{
+        min-width:0;
+        gap:8px;
+      }
+
+      .brand img{
+        width:52px;
+        height:52px;
+      }
+
+      .brand strong{
+        font-size:15px;
+        letter-spacing:1px;
+      }
+
+      .brand small{
+        font-size:7px;
+        letter-spacing:.8px;
+      }
+
+      .nav-actions{
+        gap:4px;
+      }
+
+      .admin-login-btn{
+        min-height:40px;
+        padding:0 10px;
+        font-size:9px;
+      }
+
+      .global-search{
+        grid-column:1/-1;
+        min-height:46px;
+      }
+
+      .global-search input{
+        height:46px;
+        font-size:12px;
+      }
+
+      main{
+        width:100%;
+      }
+
+      .gallery-section{
+        padding:16px 0 48px;
+      }
+
+      /* 3 buttons always visible */
+
+      .gallery-controls{
+        display:grid;
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        width:100%;
+        gap:6px;
+        padding:0 8px 12px;
+        margin:0 0 8px;
+        overflow:visible;
+      }
+
+      .gallery-filter{
+        width:100%;
+        min-width:0;
+        min-height:46px;
+        height:46px;
+        padding:0 4px;
+        border-radius:10px;
+        font-size:9px;
+        line-height:1.15;
+        letter-spacing:.01em;
+        white-space:normal;
+      }
+
+      /* 2 column product images */
+
+      .grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:8px;
+        padding:0 8px;
+      }
+
+      .product-card{
+        width:100%;
+        aspect-ratio:1 / 1;
+        border-radius:11px;
+        box-shadow:0 5px 16px rgba(63,31,82,.08);
+      }
+
+      .product-card img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center center;
+      }
+
+      .product-card:after{
+        opacity:1;
+        transform:none;
+        left:6px;
+        bottom:6px;
+        padding:4px 7px;
+        font-size:7px;
+      }
+
+      /* LIGHTBOX MOBILE */
+
+      .lightbox{
+        padding:8px;
+      }
+
+      .lightbox-dialog{
+        width:100%;
+        height:100%;
+        max-height:100dvh;
+      }
+
+      .lightbox-stage{
+        width:100%;
+        height:100%;
+        padding:48px 42px 185px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+
+      .lightbox-image{
+        display:block;
+        width:auto;
+        height:auto;
+        max-width:calc(100vw - 22px);
+        max-height:calc(100dvh - 225px);
+        margin:auto;
+        object-fit:contain;
+        object-position:center;
+        border-radius:10px;
+      }
+
+      .lightbox-nav{
+        width:40px;
+        height:40px;
+        font-size:22px;
+      }
+
+      .lightbox-prev{
+        left:0;
+      }
+
+      .lightbox-next{
+        right:0;
+      }
+
+      .lightbox-close{
+        top:6px;
+        right:6px;
+        width:40px;
+        height:40px;
+        color:var(--purple-800);
+        font-size:27px;
+        background:#fff;
+        border-color:#d8cbe0;
+      }
+
+      .lightbox-meta{
+        left:50%;
+        right:auto;
+        bottom:7px;
+        width:calc(100% - 14px);
+        max-width:420px;
+        padding:9px;
+        gap:7px;
+        border-radius:13px;
+      }
+
+      .lightbox-meta-label{
+        font-size:8px;
+      }
+
+      .lightbox-code{
+        font-size:14px;
+      }
+
+      .lightbox-actions{
+        width:100%;
+        gap:6px;
+      }
+
+      .lightbox-copy,
+      .lightbox-dm{
+        width:100%;
+        min-height:39px;
+        height:39px;
+        padding:0 10px;
+        border-radius:9px;
+        font-size:10px;
+      }
+
+      /* ADMIN MOBILE */
+
+      .admin-content{
+        width:calc(100% - 16px);
+        margin:10px auto 30px;
+      }
+
+      .admin-tabs{
+        gap:5px;
+      }
+
+      .admin-tab{
+        min-height:44px;
+        padding:0 4px;
+        font-size:9px;
+      }
+
+      .admin-view{
+        padding:11px;
+      }
+
+      .admin-modal{
+        width:calc(100% - 20px);
+        padding:18px;
+        border-radius:18px;
+      }
+
+      .admin-actions{
+        flex-direction:column;
+      }
+
+      .admin-primary,
+      .admin-secondary,
+      .admin-danger{
+        width:100%;
+      }
+
+      .folder-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+      }
+
+      .admin-item img{
+        width:50px;
+        height:50px;
+        flex-basis:50px;
+      }
+
+      .admin-item-copy strong:after{
+        display:none;
+      }
+
+      .delete-form{
+        grid-template-columns:1fr;
+      }
+
+      .footer-order{
+        width:min(100%,340px);
+      }
+    }
+
+    @media(max-width:390px){
+
+      .brand img{
+        width:48px;
+        height:48px;
+      }
+
+      .brand strong{
+        font-size:14px;
+      }
+
+      .brand small{
+        display:none;
+      }
+
+      .admin-login-btn{
+        padding:0 8px;
+        font-size:8px;
+      }
+
+      .gallery-controls{
+        padding-left:7px;
+        padding-right:7px;
+        gap:5px;
+      }
+
+      .gallery-filter{
+        height:44px;
+        min-height:44px;
+        padding:0 3px;
+        font-size:8px;
+      }
+
+      .grid{
+        gap:7px;
+        padding-left:7px;
+        padding-right:7px;
+      }
+
+      .lightbox-stage{
+        padding-bottom:174px;
+      }
+
+      .lightbox-image{
+        max-width:calc(100vw - 20px);
+        max-height:calc(100dvh - 218px);
+      }
+
+      .lightbox-meta{
+        width:calc(100% - 12px);
+        bottom:5px;
+        padding:7px;
+      }
+
+      .lightbox-copy,
+      .lightbox-dm{
+        min-height:37px;
+        height:37px;
+        font-size:9px;
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *,
+      *::before,
+      *::after{
+        scroll-behavior:auto!important;
+        transition-duration:.01ms!important;
+        animation-duration:.01ms!important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+
+      <a class="brand" href="#home" aria-label="Asterra Fleur home">
+        <img
+          src="assets/logo.jpeg"
+          alt="Asterra Fleur logo"
+          width="84"
+          height="84"
+        >
+
+        <span class="brand-label">
+          <strong>ASTERRA FLEUR</strong>
+          <small>BOUQUET THAT SPEAKS FROM THE HEART</small>
+        </span>
+      </a>
+
+      <form class="global-search" id="searchForm" role="search">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <circle cx="11" cy="11" r="6.5"></circle>
+          <path d="m16 16 4 4"></path>
+        </svg>
+
+        <label class="sr-only" for="globalSearch">
+          Search the gallery
+        </label>
+
+        <input
+          id="globalSearch"
+          type="search"
+          autocomplete="off"
+          placeholder="Search any product name or code"
+        >
+
+        <button
+          class="clear-search"
+          id="clearSearch"
+          type="button"
+          aria-label="Clear search"
+        >
+          &times;
+        </button>
+
+      </form>
+
+      <div class="nav-actions">
+        <button
+          class="admin-login-btn"
+          id="adminLoginOpen"
+          type="button"
+        >
+          Admin
+        </button>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- ================= GALLERY ================= -->
+
+  <main id="home">
+
+    <section
+      class="gallery-section"
+      id="catalogue"
+      aria-label="Product gallery"
+    >
+
+      <div
+        class="gallery-controls"
+        aria-label="Choose a collection"
+      >
+
+        <button
+          class="gallery-filter active"
+          type="button"
+          data-view-button="artificial_bokeh"
+        >
+          Artificial Bouquets
+        </button>
+
+        <button
+          class="gallery-filter"
+          type="button"
+          data-view-button="chocolate_bokeh"
+        >
+          Chocolate Bouquets
+        </button>
+
+        <button
+          class="gallery-filter"
+          type="button"
+          data-view-button="gift_collection"
+        >
+          Gift Collections
+        </button>
+
+      </div>
+
+      <p
+        class="gallery-count"
+        id="resultCount"
+        aria-live="polite"
+      ></p>
+
+      <div
+        class="catalogue-view active"
+        id="artificial_bokeh"
+        data-view
+      >
+        <div
+          class="grid"
+          id="artificialBokehGrid"
+        ></div>
+      </div>
+
+      <div
+        class="catalogue-view"
+        id="chocolate_bokeh"
+        data-view
+      >
+        <div
+          class="grid"
+          id="chocolateBokehGrid"
+        ></div>
+      </div>
+
+      <div
+        class="catalogue-view"
+        id="gift_collection"
+        data-view
+      >
+        <div
+          class="grid"
+          id="giftCollectionGrid"
+        ></div>
+      </div>
+
+      <div
+        class="catalogue-view"
+        id="search_results"
+        data-view
+      >
+        <div
+          class="grid"
+          id="searchGrid"
+        ></div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="site-footer">
+
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <strong>ASTERRA FLEUR</strong>
+        <span>@asterra_fleur</span>
+      </div>
+
+      <a
+        class="footer-order"
+        href="https://ig.me/m/asterra_fleur"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="DM for your order on Instagram"
+      >
+        DM for your order &nearr;
+      </a>
+
+    </div>
+
+  </footer>
+
+  <!-- ================= ADMIN LOGIN ================= -->
+
+  <div
+    class="admin-overlay"
+    id="adminLoginModal"
+    aria-hidden="true"
+  >
+
+    <div
+      class="admin-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="adminLoginTitle"
+    >
+
+      <h2 id="adminLoginTitle">
+        Admin Login
+      </h2>
+
+      <p>
+        Admin access only.
+      </p>
+
+      <div class="admin-field">
+        <label for="adminUsername">
+          Username
+        </label>
+
+        <input
+          id="adminUsername"
+          autocomplete="username"
+          placeholder="varshuzz"
+        >
+      </div>
+
+      <div class="admin-field">
+        <label for="adminPassword">
+          Password
+        </label>
+
+        <input
+          id="adminPassword"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Password"
+        >
+      </div>
+
+      <div
+        class="admin-error"
+        id="adminLoginError"
+      ></div>
+
+      <div class="admin-actions">
+
+        <button
+          class="admin-secondary"
+          id="adminLoginCancel"
+          type="button"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="admin-primary"
+          id="adminLoginSubmit"
+          type="button"
+        >
+          Login
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= ADMIN PANEL ================= -->
+
+  <section
+    class="admin-panel"
+    id="adminPanel"
+    aria-hidden="true"
+  >
+
+    <div class="admin-panel-head">
+
+      <strong>
+        Asterra Fleur — Admin
+      </strong>
+
+      <button
+        class="admin-close"
+        id="adminPanelClose"
+        type="button"
+      >
+        &times;
+      </button>
+
+    </div>
+
+    <div class="admin-content">
+
+      <div class="admin-tabs">
+
+        <button
+          class="admin-tab active"
+          type="button"
+          data-admin-tab="upload"
+        >
+          Image Upload
+        </button>
+
+        <button
+          class="admin-tab"
+          type="button"
+          data-admin-tab="settings"
+        >
+          Theme & Account
+        </button>
+
+        <button
+          class="admin-tab"
+          type="button"
+          data-admin-tab="folders"
+        >
+          Folders
+        </button>
+
+        <button
+          class="admin-tab"
+          type="button"
+          data-admin-tab="delete"
+        >
+          Delete
+        </button>
+
+      </div>
+
+      <!-- UPLOAD -->
+
+      <div
+        class="admin-view active"
+        id="admin-upload"
+        data-admin-view="upload"
+      >
+
+        <h3>
+          Image Upload
+        </h3>
+
+        <p class="hint">
+          Product code is automatic.
+        </p>
+
+        <div class="admin-field">
+
+          <label for="adminCategory">
+            Collection
+          </label>
+
+          <select id="adminCategory">
+
+            <option value="artificial_bokeh">
+              Artificial Bouquets
+            </option>
+
+            <option value="chocolate_bokeh">
+              Chocolate Bouquets
+            </option>
+
+            <option value="gift_collection">
+              Gift Collection
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="admin-field">
+
+          <label for="adminFiles">
+            Choose images
+          </label>
+
+          <input
+            id="adminFiles"
+            type="file"
+            accept="image/*"
+            multiple
+          >
+
+        </div>
+
+        <div class="admin-actions">
+
+          <button
+            class="admin-primary"
+            id="adminUploadBtn"
+            type="button"
+          >
+            Upload Images
+          </button>
+
+        </div>
+
+        <div
+          class="delete-message"
+          id="adminUploadMessage"
+        ></div>
+
+      </div>
+
+      <!-- THEME & ACCOUNT SETTINGS -->
+
+      <div
+        class="admin-view"
+        id="admin-settings"
+        data-admin-view="settings"
+      >
+
+        <h3>Theme & Account</h3>
+        <p class="hint">Only the authenticated admin can change these settings.</p>
+
+        <div class="settings-card">
+          <h4>Multi Color Theme</h4>
+          <div class="color-grid">
+            <label class="color-control">
+              <span>Primary</span>
+              <input id="themePrimary" type="color" value="#482061">
+            </label>
+            <label class="color-control">
+              <span>Accent</span>
+              <input id="themeAccent" type="color" value="#8d5bc2">
+            </label>
+            <label class="color-control">
+              <span>Page Background</span>
+              <input id="themeBackground" type="color" value="#faf7fc">
+            </label>
+            <label class="color-control">
+              <span>Card Surface</span>
+              <input id="themeSurface" type="color" value="#ffffff">
+            </label>
+          </div>
+          <button class="admin-primary" id="saveThemeBtn" type="button">Save Colors</button>
+          <div class="delete-message" id="themeMessage"></div>
+        </div>
+
+        <div class="settings-card">
+          <h4>Admin Username</h4>
+          <div class="settings-row">
+            <input id="newAdminUsername" type="text" autocomplete="username" placeholder="New username">
+            <button class="admin-primary" id="saveUsernameBtn" type="button">Change Username</button>
+          </div>
+          <div class="delete-message" id="usernameMessage"></div>
+        </div>
+
+        <div class="settings-card">
+          <h4>Admin Password</h4>
+          <div class="settings-row settings-stack">
+            <input id="newAdminPassword" type="password" autocomplete="new-password" placeholder="New password (minimum 8 characters)">
+            <input id="confirmAdminPassword" type="password" autocomplete="new-password" placeholder="Confirm new password">
+            <button class="admin-primary" id="savePasswordBtn" type="button">Change Password</button>
+          </div>
+          <div class="delete-message" id="passwordMessage"></div>
+        </div>
+
+      </div>
+
+      <!-- FOLDERS -->
+
+      <div
+        class="admin-view"
+        id="admin-folders"
+        data-admin-view="folders"
+      >
+
+        <h3>
+          Folders
+        </h3>
+
+        <p class="hint">
+          Uploaded images
+        </p>
+
+        <div
+          class="folder-list"
+          id="adminFolderList"
+        ></div>
+
+      </div>
+
+      <!-- DELETE -->
+
+      <div
+        class="admin-view"
+        id="admin-delete"
+        data-admin-view="delete"
+      >
+
+        <h3>
+          Delete Product
+        </h3>
+
+        <p class="hint">
+          Enter any product code and delete it.
+        </p>
+
+        <div class="delete-form">
+
+          <input
+            id="adminDeleteCode"
+            placeholder="Example: AB004"
+            autocomplete="off"
+          >
+
+          <button
+            class="admin-danger"
+            id="adminDeleteBtn"
+            type="button"
+          >
+            Delete
+          </button>
+
+        </div>
+
+        <div
+          class="delete-message"
+          id="adminDeleteMessage"
+        ></div>
+
+        <div
+          class="upload-list"
+          id="adminProductList"
+          style="margin-top:14px"
+        ></div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ================= LIGHTBOX ================= -->
+
+  <div
+    class="lightbox"
+    id="imageLightbox"
+    aria-hidden="true"
+  >
+
+    <div
+      class="lightbox-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Image preview"
+    >
+
+      <button
+        class="lightbox-close"
+        id="lightboxClose"
+        type="button"
+        aria-label="Close image preview"
+      >
+        &times;
+      </button>
+
+      <div class="lightbox-stage">
+
+        <button
+          class="lightbox-nav lightbox-prev"
+          id="lightboxPrev"
+          type="button"
+          aria-label="Previous image"
+        >
+          &#10094;
+        </button>
+
+        <img
+          class="lightbox-image"
+          id="lightboxImage"
+          src=""
+          alt=""
+        >
+
+        <button
+          class="lightbox-nav lightbox-next"
+          id="lightboxNext"
+          type="button"
+          aria-label="Next image"
+        >
+          &#10095;
+        </button>
+
+        <div
+          class="lightbox-meta"
+          aria-label="Product code"
+        >
+
+          <div class="lightbox-meta-copy">
+
+            <span class="lightbox-meta-label">
+              Product code
+            </span>
+
+            <strong
+              class="lightbox-code"
+              id="lightboxCode"
+            >
+              BCH001
+            </strong>
+
+          </div>
+
+          <div class="lightbox-actions">
+
+            <button
+              class="lightbox-copy"
+              id="lightboxCopy"
+              type="button"
+            >
+              Copy Product Code
+            </button>
+
+            <button
+              class="lightbox-dm"
+              id="lightboxDm"
+              type="button"
+            >
+              DM for Order
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= SCRIPTS ================= -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="products.js"></script>
+
+  <script>
+
+    const byId = id => document.getElementById(id);
+
+    const escapeAttr = value =>
+      String(value)
+        .replace(/&/g,'&amp;')
+        .replace(/"/g,'&quot;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+
+    const productGroups = {
+
+      artificial_bokeh:
+        PRODUCTS.filter(
+          product => product.category === 'artificial_bokeh'
+        ),
+
+      chocolate_bokeh:
+        PRODUCTS.filter(
+          product => product.category === 'chocolate_bokeh'
+        ),
+
+      gift_collection:
+        PRODUCTS.filter(
+          product => product.category === 'gift_collection'
+        )
+
+    };
+
+    const orderDmBaseUrl =
+      'https://ig.me/m/asterra_fleur';
+
+    function buildOrderDmUrl(productCode){
+
+      const orderMessage = productCode
+
+        ? 'Hi Asterra Fleur! I want to order product code '
+          + productCode
+          + '. Please share the details and availability.'
+
+        : 'Hi Asterra Fleur! I want to order a bouquet. Please share the available options.';
+
+      return orderDmBaseUrl +
+        '?text=' +
+        encodeURIComponent(orderMessage);
+    }
+
+    let activeView = 'artificial_bokeh';
+    let lastFocusedElement = null;
+    let closeTimer = null;
+
+    function productCard(product){
+
+      const alt =
+        product.name +
+        ', product code ' +
+        product.code;
+
+      const safeAlt = escapeAttr(alt);
+      const safeImage = escapeAttr(product.image);
+      const safeCode = escapeAttr(product.code);
+
+      return '<article class="product-card">' +
+
+        '<button class="product-image-trigger" type="button"' +
+
+        ' data-lightbox-src="' +
+        safeImage +
+        '"' +
+
+        ' data-lightbox-alt="' +
+        safeAlt +
+        '"' +
+
+        ' data-lightbox-code="' +
+        safeCode +
+        '"' +
+
+        ' data-lightbox-name="' +
+        escapeAttr(product.name) +
+        '"' +
+
+        ' aria-label="Preview ' +
+        safeAlt +
+        '">' +
+
+        '<img src="' +
+        safeImage +
+        '" alt="' +
+        safeAlt +
+        '" loading="lazy">' +
+
+        '</button>' +
+
+        '</article>';
+    }
+
+    function render(gridId,products){
+
+      byId(gridId).innerHTML =
+        products.length
+
+          ? products.map(productCard).join('')
+
+          : '<div class="empty">No images found.</div>';
+    }
+
+    function updateActiveButtons(view){
+
+      document
+        .querySelectorAll('[data-view-button]')
+        .forEach(button => {
+
+          button.classList.toggle(
+            'active',
+            button.dataset.viewButton === view
+          );
+
+        });
+    }
+
+    function setResultCount(count,visible){
+
+      const countElement =
+        byId('resultCount');
+
+      countElement.textContent =
+        count +
+        ' image' +
+        (count === 1 ? '' : 's');
+
+      countElement.classList.toggle(
+        'visible',
+        visible
+      );
+    }
+
+    function showView(view,shouldScroll){
+
+      if(view === 'search_results') return;
+
+      activeView = view;
+
+      byId('globalSearch').value = '';
+
+      byId('clearSearch')
+        .classList
+        .remove('visible');
+
+      document
+        .querySelectorAll('[data-view]')
+        .forEach(element => {
+
+          element.classList.toggle(
+            'active',
+            element.id === view
+          );
+
+        });
+
+      updateActiveButtons(view);
+
+      setResultCount(
+        productGroups[view].length,
+        false
+      );
+
+      history.replaceState(
+        null,
+        '',
+        '#' + view
+      );
+
+      if(shouldScroll){
+
+        byId('catalogue')
+          .scrollIntoView({
+            behavior:'smooth',
+            block:'start'
+          });
+
+      }
+    }
+
+    function runSearch(){
+
+      const query =
+        byId('globalSearch')
+          .value
+          .trim()
+          .toLowerCase();
+
+      byId('clearSearch')
+        .classList
+        .toggle(
+          'visible',
+          Boolean(query)
+        );
+
+      if(!query){
+
+        showView(
+          activeView,
+          false
+        );
+
+        return;
+      }
+
+      const matches =
+        PRODUCTS.filter(product => {
+
+          return (
+            product.name +
+            ' ' +
+            product.code +
+            ' ' +
+            product.category
+          )
+          .toLowerCase()
+          .includes(query);
+
+        });
+
+      render(
+        'searchGrid',
+        matches
+      );
+
+      document
+        .querySelectorAll('[data-view]')
+        .forEach(element => {
+
+          element.classList.toggle(
+            'active',
+            element.id === 'search_results'
+          );
+
+        });
+
+      updateActiveButtons('');
+
+      setResultCount(
+        matches.length,
+        true
+      );
+    }
+
+    function copyCode(code,button){
+
+      const originalLabel =
+        button.dataset.defaultLabel ||
+        button.textContent ||
+        'Copy code';
+
+      const finish = () => {
+
+        window.clearTimeout(
+          button._copyTimer
+        );
+
+        button.textContent = 'Copied';
+
+        button._copyTimer =
+          window.setTimeout(
+            () => {
+              button.textContent =
+                originalLabel;
+            },
+            1100
+          );
+
+      };
+
+      const fallbackCopy = () => {
+
+        const helper =
+          document.createElement('textarea');
+
+        helper.value = code;
+
+        helper.setAttribute(
+          'readonly',
+          ''
+        );
+
+        helper.style.position = 'fixed';
+        helper.style.opacity = '0';
+        helper.style.pointerEvents = 'none';
+
+        document.body.appendChild(helper);
+
+        helper.select();
+
+        try{
+          document.execCommand('copy');
+        }catch(error){}
+
+        helper.remove();
+      };
+
+      if(
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+      ){
+
+        navigator.clipboard
+          .writeText(code)
+          .then(finish)
+          .catch(() => {
+
+            fallbackCopy();
+            finish();
+
+          });
+
+        return;
+      }
+
+      fallbackCopy();
+      finish();
+    }
+
+    let lightboxItems = [];
+    let lightboxIndex = 0;
+
+    function getVisibleLightboxItems(){
+
+      const active =
+        document.querySelector(
+          '[data-view].active'
+        );
+
+      return active
+        ? Array.from(
+            active.querySelectorAll(
+              '.product-image-trigger'
+            )
+          )
+        : [];
+    }
+
+    function updateLightboxItem(index){
+
+      if(!lightboxItems.length) return;
+
+      lightboxIndex =
+        (index + lightboxItems.length) %
+        lightboxItems.length;
+
+      const item =
+        lightboxItems[lightboxIndex];
+
+      const img =
+        byId('lightboxImage');
+
+      img.src =
+        item.dataset.lightboxSrc;
+
+      img.alt =
+        item.dataset.lightboxAlt;
+
+      byId('lightboxCode')
+        .textContent =
+        item.dataset.lightboxCode;
+
+      const copy =
+        byId('lightboxCopy');
+
+      copy.dataset.code =
+        item.dataset.lightboxCode;
+
+      byId('lightboxDm')
+        .dataset.code =
+        item.dataset.lightboxCode;
+    }
+
+    function moveLightbox(step){
+
+      updateLightboxItem(
+        lightboxIndex + step
+      );
+    }
+
+    function openLightbox(trigger){
+
+      const lightbox =
+        byId('imageLightbox');
+
+      const lightboxImage =
+        byId('lightboxImage');
+
+      const lightboxCode =
+        byId('lightboxCode');
+
+      const lightboxCopy =
+        byId('lightboxCopy');
+
+      window.clearTimeout(
+        closeTimer
+      );
+
+      lastFocusedElement =
+        trigger;
+
+      lightboxItems =
+        getVisibleLightboxItems();
+
+      lightboxIndex =
+        Math.max(
+          0,
+          lightboxItems.indexOf(trigger)
+        );
+
+      lightboxImage.src =
+        trigger.dataset.lightboxSrc;
+
+      lightboxImage.alt =
+        trigger.dataset.lightboxAlt;
+
+      lightboxCode.textContent =
+        trigger.dataset.lightboxCode;
+
+      lightboxCopy.dataset.code =
+        trigger.dataset.lightboxCode;
+
+      lightboxCopy.textContent = 'Copy Product Code';
+
+      byId('lightboxDm')
+        .dataset.code =
+        trigger.dataset.lightboxCode;
+
+      lightbox.setAttribute(
+        'aria-hidden',
+        'false'
+      );
+
+      document.body.classList.add(
+        'lightbox-open'
+      );
+
+      requestAnimationFrame(() => {
+
+        lightbox.classList.add(
+          'is-open'
+        );
+
+      });
+
+      byId('lightboxClose')
+        .focus({
+          preventScroll:true
+        });
+    }
+
+    function closeLightbox(){
+
+      const lightbox =
+        byId('imageLightbox');
+
+      if(
+        !lightbox.classList.contains(
+          'is-open'
+        )
+      ){
+        return;
+      }
+
+      lightbox.classList.remove(
+        'is-open'
+      );
+
+      lightbox.setAttribute(
+        'aria-hidden',
+        'true'
+      );
+
+      document.body.classList.remove(
+        'lightbox-open'
+      );
+
+      closeTimer =
+        window.setTimeout(
+          () => {
+            byId(
+              'lightboxImage'
+            ).src = '';
+          },
+          330
+        );
+
+      if(lastFocusedElement){
+
+        lastFocusedElement.focus({
+          preventScroll:true
+        });
+
+      }
+    }
+
+    function getLightboxFocusables(){
+
+      return [
+        byId('lightboxClose'),
+        byId('lightboxPrev'),
+        byId('lightboxNext'),
+        byId('lightboxCopy'),
+        byId('lightboxDm')
+      ].filter(Boolean);
+    }
+
+    /* INITIAL RENDER */
+
+    render(
+      'artificialBokehGrid',
+      productGroups.artificial_bokeh
+    );
+
+    render(
+      'chocolateBokehGrid',
+      productGroups.chocolate_bokeh
+    );
+
+    render(
+      'giftCollectionGrid',
+      productGroups.gift_collection
+    );
+
+    setResultCount(
+      productGroups.artificial_bokeh.length,
+      false
+    );
+
+    /* COLLECTION BUTTONS */
+
+    document
+      .querySelectorAll(
+        '[data-view-button]'
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            showView(
+              button.dataset.viewButton,
+              true
+            );
+
+          }
+        );
+
+      });
+
+    /* ORDER LINKS */
+
+    document
+      .querySelectorAll(
+        '.order-link, .footer-order'
+      )
+      .forEach(link => {
+
+        const productCode =
+          link.dataset.productCode || '';
+
+        link.href =
+          buildOrderDmUrl(
+            productCode
+          );
+
+      });
+
+    /* IMAGE OPEN */
+
+    document.addEventListener(
+      'click',
+      event => {
+
+        const imageTrigger =
+          event.target.closest(
+            '.product-image-trigger'
+          );
+
+        if(imageTrigger){
+
+          openLightbox(
+            imageTrigger
+          );
+
+        }
+
+      }
+    );
+
+    /* LIGHTBOX BUTTONS */
+
+    byId('lightboxClose')
+      .addEventListener(
+        'click',
+        closeLightbox
+      );
+
+    byId('lightboxPrev')
+      .addEventListener(
+        'click',
+        () => moveLightbox(-1)
+      );
+
+    byId('lightboxNext')
+      .addEventListener(
+        'click',
+        () => moveLightbox(1)
+      );
+
+    byId('lightboxCopy')
+      .addEventListener(
+        'click',
+        event => {
+          copyCode(
+            event.currentTarget.dataset.code || '',
+            event.currentTarget
+          );
+        }
+      );
+
+    byId('lightboxDm')
+      .addEventListener(
+        'click',
+        event => {
+
+          const code =
+            event.currentTarget.dataset.code ||
+            '';
+
+          window.open(
+            buildOrderDmUrl(code),
+            '_blank',
+            'noopener,noreferrer'
+          );
+
+        }
+      );
+
+    byId('imageLightbox')
+      .addEventListener(
+        'click',
+        event => {
+
+          if(
+            !event.target.closest(
+              '.lightbox-image'
+            ) &&
+            !event.target.closest(
+              '.lightbox-meta'
+            ) &&
+            !event.target.closest(
+              '.lightbox-close'
+            )
+          ){
+
+            closeLightbox();
+
+          }
+
+        }
+      );
+
+    /* KEYBOARD */
+
+    document.addEventListener(
+      'keydown',
+      event => {
+
+        if(event.key === 'Escape'){
+
+          closeLightbox();
+
+          return;
+        }
+
+        if(
+          byId('imageLightbox')
+            .classList
+            .contains('is-open') &&
+          event.key === 'ArrowLeft'
+        ){
+
+          event.preventDefault();
+
+          moveLightbox(-1);
+
+          return;
+        }
+
+        if(
+          byId('imageLightbox')
+            .classList
+            .contains('is-open') &&
+          event.key === 'ArrowRight'
+        ){
+
+          event.preventDefault();
+
+          moveLightbox(1);
+
+          return;
+        }
+
+        if(
+          event.key !== 'Tab' ||
+          !byId('imageLightbox')
+            .classList
+            .contains('is-open')
+        ){
+
+          return;
+        }
+
+        const focusables =
+          getLightboxFocusables();
+
+        if(!focusables.length) return;
+
+        const firstFocusable =
+          focusables[0];
+
+        const lastFocusable =
+          focusables[
+            focusables.length - 1
+          ];
+
+        if(
+          event.shiftKey &&
+          document.activeElement ===
+          firstFocusable
+        ){
+
+          event.preventDefault();
+
+          lastFocusable.focus({
+            preventScroll:true
+          });
+
+          return;
+        }
+
+        if(
+          !event.shiftKey &&
+          document.activeElement ===
+          lastFocusable
+        ){
+
+          event.preventDefault();
+
+          firstFocusable.focus({
+            preventScroll:true
+          });
+
+        }
+
+      }
+    );
+
+    /* SEARCH */
+
+    byId('searchForm')
+      .addEventListener(
+        'submit',
+        event => {
+
+          event.preventDefault();
+
+          runSearch();
+
+          byId('catalogue')
+            .scrollIntoView({
+              behavior:'smooth',
+              block:'start'
+            });
+
+        }
+      );
+
+    byId('globalSearch')
+      .addEventListener(
+        'input',
+        runSearch
+      );
+
+    byId('clearSearch')
+      .addEventListener(
+        'click',
+        () => {
+
+          byId('globalSearch').value = '';
+
+          showView(
+            activeView,
+            false
+          );
+
+          byId('globalSearch')
+            .focus();
+
+        }
+      );
+
+    /* HASH */
+
+    if(
+      [
+        '#artificial_bokeh',
+        '#chocolate_bokeh',
+        '#gift_collection'
+      ].includes(location.hash)
+    ){
+
+      showView(
+        location.hash.slice(1),
+        false
+      );
+
+    }
+
+  </script>
+
+  <!-- ================= SUPABASE + ADMIN ================= -->
+
+  <script>
+
+  (() => {
+
+    function safeAssetUrl(path){
+
+      if(
+        !path ||
+        /^https?:\/\//i.test(path)
+      ){
+        return path;
+      }
+
+      return path
+        .split('/')
+        .map(
+          (part,i) =>
+            i === 0
+              ? part
+              : encodeURIComponent(part)
+        )
+        .join('/');
+    }
+
+    function attachImageFallback(
+      img,
+      label
+    ){
+
+      img.onerror = function(){
+
+        this.onerror = null;
+
+        this.src =
+          'data:image/svg+xml;charset=UTF-8,' +
+          encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800">' +
+            '<rect width="800" height="800" fill="#f1eaf6"/>' +
+            '<text x="400" y="380" text-anchor="middle" font-family="Arial" font-size="34" fill="#6d4b7c">Image unavailable</text>' +
+            '<text x="400" y="430" text-anchor="middle" font-family="Arial" font-size="24" fill="#8c7199">' +
+            String(
+              label || 'Asterra Fleur'
+            ).replace(
+              /[<&>]/g,
+              ''
+            ) +
+            '</text></svg>'
+          );
+
+      };
+    }
+
+    const SUPABASE_URL =
+      'https://ephknyabekkicieghywc.supabase.co';
+
+    const SUPABASE_KEY =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwaGtueWFiZWtraWNpZWdoeXdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0MDU4MDQsImV4cCI6MjEwMzk4MTgwNH0._5ewmR9DQkBkC_8-0911h1waMk1O-r1C8CyBbrZcr-0';
+
+    const {
+      createClient
+    } = window.supabase;
+
+    const sb =
+      createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+    const ADMIN_EMAIL =
+      'VarshaNarendrakumar68@gmail.com';
+
+
+    const meta = {
+
+      artificial_bokeh:{
+        label:'Artificial BOUQUET',
+        prefix:'AB'
+      },
+
+      chocolate_bokeh:{
+        label:'Chocolate BOUQUET',
+        prefix:'CB'
+      },
+
+      gift_collection:{
+        label:'Gift Collection',
+        prefix:'GC'
+      }
+
+    };
+
+    const $ =
+      id => document.getElementById(id);
+
+    const BUCKET =
+      'product-images';
+
+    const DEFAULT_SETTINGS = {
+      username: 'varshuzz',
+      primary: '#482061',
+      accent: '#8d5bc2',
+      background: '#faf7fc',
+      surface: '#ffffff'
+    };
+
+    function applyTheme(settings){
+      const root = document.documentElement;
+      root.style.setProperty('--purple-800', settings.primary || DEFAULT_SETTINGS.primary);
+      root.style.setProperty('--purple-600', settings.accent || DEFAULT_SETTINGS.accent);
+      root.style.setProperty('--purple-500', settings.accent || DEFAULT_SETTINGS.accent);
+      root.style.setProperty('--page', settings.background || DEFAULT_SETTINGS.background);
+      root.style.setProperty('--surface', settings.surface || DEFAULT_SETTINGS.surface);
+      document.body.style.background = settings.background || DEFAULT_SETTINGS.background;
+    }
+
+    async function getSettings(){
+      const {data,error} = await sb.from('site_settings').select('key,value');
+      if(error) throw error;
+      const settings = {...DEFAULT_SETTINGS};
+      (data || []).forEach(row => { if(row.key in settings) settings[row.key] = row.value; });
+      return settings;
+    }
+
+    async function loadSettings(){
+      try{
+        const settings = await getSettings();
+        applyTheme(settings);
+        if($('newAdminUsername')) $('newAdminUsername').value = settings.username;
+        if($('themePrimary')) $('themePrimary').value = settings.primary;
+        if($('themeAccent')) $('themeAccent').value = settings.accent;
+        if($('themeBackground')) $('themeBackground').value = settings.background;
+        if($('themeSurface')) $('themeSurface').value = settings.surface;
+      }catch(error){
+        console.warn('Settings load failed:', error);
+        applyTheme(DEFAULT_SETTINGS);
+      }
+    }
+
+    async function saveSetting(key,value){
+      const updated_at = new Date().toISOString();
+      const {data,error} = await sb.from('site_settings')
+        .update({value,updated_at})
+        .eq('key',key)
+        .select('key')
+        .maybeSingle();
+      if(error) throw error;
+      if(!data){
+        const {error:insertError} = await sb.from('site_settings')
+          .insert({key,value,updated_at});
+        if(insertError) throw insertError;
+      }
+    }
+
+    function remove(code){
+
+      let i =
+        PRODUCTS.findIndex(
+          p => p.code === code
+        );
+
+      if(i >= 0){
+
+        PRODUCTS.splice(
+          i,
+          1
+        );
+
+      }
+
+      Object.keys(productGroups)
+        .forEach(k => {
+
+          i =
+            productGroups[k]
+              .findIndex(
+                p => p.code === code
+              );
+
+          if(i >= 0){
+
+            productGroups[k].splice(
+              i,
+              1
+            );
+
+          }
+
+        });
+    }
+
+    function refresh(){
+
+      render(
+        'artificialBokehGrid',
+        productGroups.artificial_bokeh
+      );
+
+      render(
+        'chocolateBokehGrid',
+        productGroups.chocolate_bokeh
+      );
+
+      render(
+        'giftCollectionGrid',
+        productGroups.gift_collection
+      );
+
+      if(productGroups[activeView]){
+
+        setResultCount(
+          productGroups[activeView].length,
+          false
+        );
+
+      }
+    }
+
+    function esc(s){
+
+      return String(s)
+        .replace(/&/g,'&amp;')
+        .replace(/"/g,'&quot;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+
+    }
+
+    function folders(){
+
+      $('adminFolderList')
+        .innerHTML =
+        Object.keys(meta)
+          .map(cat => {
+
+            const a =
+              productGroups[cat] || [];
+
+            return (
+
+              '<div class="folder-section">' +
+
+              '<div class="folder-title">' +
+
+              '<span>' +
+              meta[cat].label +
+              '</span>' +
+
+              '<span>' +
+              a.length +
+              ' images' +
+              '</span>' +
+
+              '</div>' +
+
+              '<div class="folder-grid">' +
+
+              (
+
+                a.length
+
+                ? a.map(p =>
+
+                    '<div class="folder-card"' +
+
+                    ' data-lightbox-src="' +
+                    esc(
+                      safeAssetUrl(
+                        p.image
+                      )
+                    ) +
+                    '"' +
+
+                    ' data-lightbox-code="' +
+                    esc(p.code) +
+                    '"' +
+
+                    ' data-lightbox-alt="' +
+                    esc(
+                      p.name ||
+                      p.code
+                    ) +
+                    '"' +
+
+                    ' data-lightbox-name="' +
+                    esc(
+                      p.name ||
+                      p.code
+                    ) +
+                    '">' +
+
+                    '<img src="' +
+                    esc(
+                      safeAssetUrl(
+                        p.image
+                      )
+                    ) +
+                    '" alt="">' +
+
+                    '<div>' +
+                    esc(p.code) +
+                    '</div>' +
+
+                    '</div>'
+
+                  ).join('')
+
+                : '<div class="admin-empty" style="grid-column:1/-1">No images</div>'
+
+              ) +
+
+              '</div>' +
+
+              '</div>'
+
+            );
+
+          })
+          .join('');
+    }
+
+    function adminList(){
+
+      const a =
+        [...PRODUCTS]
+          .sort(
+            (x,y) =>
+              x.code.localeCompare(
+                y.code,
+                undefined,
+                {numeric:true}
+              )
+          );
+
+      $('adminProductList')
+        .innerHTML =
+
+        a.length
+
+        ? a.map(p =>
+
+            '<div class="admin-item" data-copy-code="' +
+            esc(p.code) +
+            '">' +
+
+            '<img src="' +
+            esc(
+              safeAssetUrl(
+                p.image
+              )
+            ) +
+            '" alt="">' +
+
+            '<div class="admin-item-copy">' +
+
+            '<strong>' +
+            esc(p.code) +
+            '</strong>' +
+
+            '<span>' +
+            esc(
+              meta[p.category].label
+            ) +
+            '</span>' +
+
+            '</div>' +
+
+            '<span class="admin-badge">' +
+
+            (
+              p.custom
+                ? 'Uploaded'
+                : 'Built-in'
+            ) +
+
+            '</span>' +
+
+            '</div>'
+
+          ).join('')
+
+        : '<div class="admin-empty">No products.</div>';
+
+    }
+
+    async function loadShared(){
+
+      try{
+
+        const [
+          {data:uploads,error:upErr},
+          {data:deleted,error:delErr}
+        ] = await Promise.all([
+
+          sb
+            .from('products')
+            .select(
+              'id,code,name,category,storage_path,image_path,created_at'
+            )
+            .order('code'),
+
+          sb
+            .from('deleted_products')
+            .select('code')
+
+        ]);
+
+        if(upErr) throw upErr;
+        if(delErr) throw delErr;
+
+        const deletedCodes =
+          new Set(
+            (deleted || [])
+              .map(x => x.code)
+          );
+
+        [...deletedCodes]
+          .forEach(remove);
+
+        (uploads || [])
+          .forEach(p => {
+
+            if(
+              deletedCodes.has(p.code) ||
+              PRODUCTS.some(
+                x => x.code === p.code
+              )
+            ){
+
+              return;
+            }
+
+            p.storage_path =
+              p.storage_path ||
+              p.image_path;
+
+            if(!p.storage_path) return;
+
+            p.image =
+              SUPABASE_URL +
+              '/storage/v1/object/public/' +
+              BUCKET +
+              '/' +
+              p.storage_path;
+
+            p.custom = true;
+
+            PRODUCTS.push(p);
+
+            if(productGroups[p.category]){
+
+              productGroups[p.category]
+                .push(p);
+
+            }
+
+          });
+
+        refresh();
+        folders();
+        adminList();
+
+      }catch(e){
+
+        console.error(
+          'Supabase load failed',
+          e
+        );
+
+        const msg =
+          $('adminUploadMessage');
+
+        if(msg){
+
+          msg.textContent =
+            'Shared data could not be loaded. Check Supabase setup.';
+
+        }
+
+      }
+    }
+
+    async function signIn(){
+
+      const username =
+        $('adminUsername')
+          .value
+          .trim();
+
+      const password =
+        $('adminPassword')
+          .value;
+
+      if(!username){
+        $('adminLoginError').textContent = 'Enter your admin username.';
+        return;
+      }
+
+      let settings;
+      try{
+        settings = await getSettings();
+      }catch(error){
+        $('adminLoginError').textContent = 'Cannot load admin settings from Supabase.';
+        return;
+      }
+
+      if(username.toLowerCase() !== settings.username.toLowerCase()){
+        $('adminLoginError').textContent = 'Wrong admin username or password.';
+        return;
+      }
+
+      if(!password){
+
+        $('adminLoginError')
+          .textContent =
+          'Enter your admin password.';
+
+        return;
+      }
+
+      $('adminLoginSubmit')
+        .disabled = true;
+
+      $('adminLoginError')
+        .textContent =
+        'Connecting to admin service...';
+
+      try{
+
+        const controller =
+          new AbortController();
+
+        const timer =
+          setTimeout(
+            () => controller.abort(),
+            10000
+          );
+
+        const probe =
+          await fetch(
+            SUPABASE_URL +
+            '/auth/v1/settings',
+            {
+              method:'GET',
+              headers:{
+                'apikey':
+                  SUPABASE_KEY
+              },
+              cache:'no-store',
+              signal:controller.signal
+            }
+          );
+
+        clearTimeout(timer);
+
+        if(!probe.ok){
+
+          throw new Error(
+            'Supabase connection returned HTTP ' +
+            probe.status +
+            '. Check the Supabase URL/key pair.'
+          );
+        }
+
+        const {error} =
+          await sb.auth.signInWithPassword({
+
+            email:ADMIN_EMAIL,
+
+            password
+
+          });
+
+        if(error) throw error;
+
+        const {
+          data:{session}
+        } =
+          await sb.auth.getSession();
+
+        if(!session){
+
+          throw new Error(
+            'No admin session was created. Check Supabase Authentication > Users.'
+          );
+        }
+
+        panelOpen();
+
+      }catch(error){
+
+        console.error(
+          'Admin login error:',
+          error
+        );
+
+        if(
+          error.name ===
+          'AbortError'
+        ){
+
+          $('adminLoginError')
+            .textContent =
+            'Supabase connection timed out. Check the Project URL and API key.';
+
+        }else if(
+          error.message ===
+          'Invalid login credentials'
+        ){
+
+          $('adminLoginError')
+            .textContent =
+            'Invalid password. In Supabase Authentication > Users, reset the password for ' +
+            ADMIN_EMAIL +
+            '.';
+
+        }else if(
+          error.message &&
+          /Failed to fetch|NetworkError|Load failed/i
+            .test(error.message)
+        ){
+
+          $('adminLoginError')
+            .textContent =
+            'Cannot reach Supabase. The website URL and API key must belong to the same Supabase project.';
+
+        }else{
+
+          $('adminLoginError')
+            .textContent =
+            'Admin login failed: ' +
+            (
+              error.message ||
+              'Check Supabase Auth setup.'
+            );
+
+        }
+
+      }finally{
+
+        $('adminLoginSubmit')
+          .disabled = false;
+
+      }
+    }
+
+    async function signOut(){
+
+      await sb.auth.signOut();
+
+      panelClose();
+
+    }
+
+    async function nextCode(category){
+
+      const {
+        data,
+        error
+      } =
+        await sb.rpc(
+          'next_product_code',
+          {
+            p_category:
+              category
+          }
+        );
+
+      if(error) throw error;
+
+      return data;
+    }
+
+    async function uploadOne(
+      file,
+      category
+    ){
+
+      const code =
+        await nextCode(category);
+
+      const safeName =
+        file.name
+          .toLowerCase()
+          .replace(
+            /[^a-z0-9._-]+/g,
+            '-'
+          );
+
+      const path =
+        category +
+        '/' +
+        code +
+        '-' +
+        crypto.randomUUID() +
+        '-' +
+        safeName;
+
+      const {
+        error:storageError
+      } =
+        await sb.storage
+          .from(BUCKET)
+          .upload(
+            path,
+            file,
+            {
+              upsert:false,
+              cacheControl:'31536000',
+              contentType:file.type
+            }
+          );
+
+      if(storageError)
+        throw storageError;
+
+      const {
+        data,
+        error:rowError
+      } =
+        await sb
+          .from('products')
+          .insert({
+
+            code,
+
+            name:
+              meta[category].label +
+              ' ' +
+              code.slice(2),
+
+            category,
+
+            storage_path:path,
+
+            image_path:path
+
+          })
+          .select(
+            'id,code,name,category,storage_path,image_path,created_at'
+          )
+          .single();
+
+      if(rowError){
+
+        await sb.storage
+          .from(BUCKET)
+          .remove([path]);
+
+        throw rowError;
+      }
+
+      data.image =
+        SUPABASE_URL +
+        '/storage/v1/object/public/' +
+        BUCKET +
+        '/' +
+        data.storage_path;
+
+      data.custom = true;
+
+      return data;
+    }
+
+    async function deleteCode(code){
+      // Find the product in Supabase. Built-in products only exist in products.js,
+      // so they will not have a row in the products table.
+      const {data:product,error:findError} = await sb.from('products')
+        .select('id,code,name,category,storage_path,image_path')
+        .eq('code',code)
+        .maybeSingle();
+      if(findError) throw findError;
+
+      // Built-in/local product: store its code in deleted_products so the deletion
+      // survives page refresh and future loadShared() calls.
+      if(!product){
+        const localProduct = PRODUCTS.find(p => p.code === code);
+
+        if(!localProduct){
+          throw new Error('Product not found: ' + code);
+        }
+
+        // Avoid ON CONFLICT because older Supabase setups may only have a partial
+        // unique index, which PostgREST cannot always use as an upsert constraint.
+        const {error:clearDeletedError} = await sb
+          .from('deleted_products')
+          .delete()
+          .eq('code', code);
+        if(clearDeletedError) throw clearDeletedError;
+
+        const {error:archiveError} = await sb
+          .from('deleted_products')
+          .insert({
+            code: localProduct.code,
+            name: localProduct.name || null,
+            category: localProduct.category || null,
+            image_url: localProduct.image || null,
+            image_path: null,
+            storage_path: null
+          });
+        if(archiveError) throw archiveError;
+
+        remove(code);
+        refresh();
+        folders();
+        adminList();
+        return;
+      }
+
+      // Uploaded/Supabase product: delete its storage object first (if present).
+      const storagePath = product.storage_path || product.image_path;
+      if(storagePath){
+        const {error:storageError} = await sb.storage.from(BUCKET).remove([storagePath]);
+        if(storageError && !/not found|no such object|does not exist/i.test(storageError.message || '')) {
+          throw storageError;
+        }
+      }
+
+      const {error:deleteError} = await sb.from('products').delete().eq('id',product.id);
+      if(deleteError) throw deleteError;
+
+      remove(code);
+      refresh();
+      folders();
+      adminList();
+    }
+
+    async function panelLoad(){
+
+      await loadShared();
+
+      const {
+        data:{session}
+      } =
+        await sb.auth.getSession();
+
+      if(!session){
+
+        panelClose();
+
+        return;
+      }
+    }
+
+    function loginOpen(){
+
+      $('adminLoginModal')
+        .classList
+        .add('open');
+
+      $('adminLoginModal')
+        .setAttribute(
+          'aria-hidden',
+          'false'
+        );
+
+      $('adminUsername').focus();
+    }
+
+    function loginClose(){
+
+      $('adminLoginModal')
+        .classList
+        .remove('open');
+
+      $('adminLoginModal')
+        .setAttribute(
+          'aria-hidden',
+          'true'
+        );
+
+      $('adminLoginError')
+        .textContent = '';
+
+      $('adminPassword')
+        .value = '';
+    }
+
+    function panelOpen(){
+
+      loginClose();
+
+      $('adminPanel')
+        .classList
+        .add('open');
+
+      $('adminPanel')
+        .setAttribute(
+          'aria-hidden',
+          'false'
+        );
+
+      document.body.style.overflow =
+        'hidden';
+
+      tab('upload');
+
+      panelLoad();
+    }
+
+    function panelClose(){
+
+      $('adminPanel')
+        .classList
+        .remove('open');
+
+      $('adminPanel')
+        .setAttribute(
+          'aria-hidden',
+          'true'
+        );
+
+      document.body.style.overflow =
+        '';
+    }
+
+    function tab(t){
+
+      document
+        .querySelectorAll(
+          '[data-admin-tab]'
+        )
+        .forEach(b => {
+
+          b.classList.toggle(
+            'active',
+            b.dataset.adminTab === t
+          );
+
+        });
+
+      document
+        .querySelectorAll(
+          '[data-admin-view]'
+        )
+        .forEach(v => {
+
+          v.classList.toggle(
+            'active',
+            v.dataset.adminView === t
+          );
+
+        });
+
+      if(t === 'folders')
+        folders();
+
+      if(t === 'settings')
+        loadSettings();
+
+      if(t === 'delete')
+        adminList();
+    }
+
+    $('adminLoginOpen')
+      .onclick =
+      loginOpen;
+
+    $('adminLoginCancel')
+      .onclick =
+      loginClose;
+
+    $('adminLoginSubmit')
+      .onclick =
+      signIn;
+
+    [
+      $('adminUsername'),
+      $('adminPassword')
+    ].forEach(x => {
+
+      x.onkeydown =
+        e => {
+
+          if(e.key === 'Enter')
+            $('adminLoginSubmit')
+              .click();
+
+        };
+
+    });
+
+    $('adminPanelClose')
+      .onclick =
+      panelClose;
+
+    document
+      .querySelectorAll(
+        '[data-admin-tab]'
+      )
+      .forEach(b => {
+
+        b.onclick =
+          () =>
+            tab(
+              b.dataset.adminTab
+            );
+
+      });
+
+    /* UPLOAD */
+
+    $('adminUploadBtn')
+      .onclick =
+      async () => {
+
+        const fs =
+          [
+            ...$('adminFiles')
+              .files
+          ];
+
+        const cat =
+          $('adminCategory')
+            .value;
+
+        const msg =
+          $('adminUploadMessage');
+
+        const {
+          data:{session}
+        } =
+          await sb.auth.getSession();
+
+        if(!session){
+
+          msg.textContent =
+            'Admin session expired. Please login again.';
+
+          return;
+        }
+
+        if(!fs.length){
+
+          msg.textContent =
+            'Choose at least one image.';
+
+          return;
+        }
+
+        msg.textContent =
+          'Uploading to Supabase Storage...';
+
+        try{
+
+          let count = 0;
+
+          for(
+            const f of fs
+          ){
+
+            if(
+              !f.type.startsWith(
+                'image/'
+              )
+            ){
+
+              continue;
+            }
+
+            const p =
+              await uploadOne(
+                f,
+                cat
+              );
+
+            PRODUCTS.push(p);
+
+            productGroups[cat]
+              .push(p);
+
+            count++;
+
+          }
+
+          $('adminFiles')
+            .value = '';
+
+          refresh();
+          folders();
+          adminList();
+
+          msg.textContent =
+            count +
+            ' image(s) uploaded. Changes are now shared.';
+
+        }catch(e){
+
+          console.error(e);
+
+          msg.textContent =
+            'Upload failed: ' +
+            (
+              e.message ||
+              'Check Supabase policies/setup.'
+            );
+        }
+
+      };
+
+    /* DELETE */
+
+    $('adminDeleteBtn')
+      .onclick =
+      async () => {
+
+        const code =
+          $('adminDeleteCode')
+            .value
+            .trim()
+            .toUpperCase();
+
+        const msg =
+          $('adminDeleteMessage');
+
+        const {
+          data:{session}
+        } =
+          await sb.auth.getSession();
+
+        if(!session){
+
+          msg.textContent =
+            'Admin session expired. Please login again.';
+
+          return;
+        }
+
+        if(!code){
+
+          msg.textContent =
+            'Enter a product code.';
+
+          return;
+        }
+
+        msg.textContent =
+          'Deleting from Supabase Storage...';
+
+        try{
+
+          const exists =
+            PRODUCTS.some(
+              p => p.code === code
+            );
+
+          await deleteCode(code);
+
+          $('adminDeleteCode')
+            .value = '';
+
+          msg.textContent =
+            exists
+              ? code +
+                ' deleted for everyone.'
+              : code +
+                ' marked deleted for everyone.';
+
+        }catch(e){
+
+          console.error(e);
+
+          msg.textContent =
+            'Delete failed: ' +
+            (
+              e.message ||
+              'Check Supabase policies/setup.'
+            );
+        }
+
+      };
+
+    /* AUTH STATE */
+
+    sb.auth.onAuthStateChange(
+      (_event,session) => {
+
+        if(
+          !session &&
+          $('adminPanel')
+            .classList
+            .contains('open')
+        ){
+
+          panelClose();
+
+        }
+
+      }
+    );
+
+    /* ADMIN FOLDERS / COPY */
+
+    document.addEventListener(
+      'click',
+      event => {
+
+        const folder =
+          event.target.closest(
+            '.folder-card'
+          );
+
+        if(folder){
+
+          openLightbox({
+
+            dataset:{
+              lightboxSrc:
+                folder.dataset
+                  .lightboxSrc,
+
+              lightboxAlt:
+                folder.dataset
+                  .lightboxAlt,
+
+              lightboxCode:
+                folder.dataset
+                  .lightboxCode,
+
+              lightboxName:
+                folder.dataset
+                  .lightboxName
+            },
+
+            focus:()=>{}
+
+          });
+
+          return;
+        }
+
+        const item =
+          event.target.closest(
+            '.admin-item[data-copy-code]'
+          );
+
+        if(item){
+
+          const code =
+            item.dataset.copyCode;
+
+          if(
+            navigator.clipboard?.writeText
+          ){
+
+            navigator.clipboard
+              .writeText(code)
+              .catch(() => {});
+
+          }
+
+          const strong =
+            item.querySelector(
+              'strong'
+            );
+
+          if(strong){
+
+            const old =
+              strong.textContent;
+
+            strong.textContent =
+              'Copied: ' + code;
+
+            setTimeout(
+              () => {
+                strong.textContent =
+                  old;
+              },
+              1200
+            );
+
+          }
+
+        }
+
+      }
+    );
+
+    /* SETTINGS */
+
+    $('saveThemeBtn').onclick = async () => {
+      const msg = $('themeMessage');
+      try{
+        const settings = {
+          primary: $('themePrimary').value,
+          accent: $('themeAccent').value,
+          background: $('themeBackground').value,
+          surface: $('themeSurface').value
+        };
+        for(const [key,value] of Object.entries(settings)) await saveSetting(key,value);
+        applyTheme({...DEFAULT_SETTINGS,...settings});
+        msg.textContent = 'Colors saved to Supabase.';
+      }catch(error){
+        console.error(error);
+        msg.textContent = 'Could not save colors. Check Supabase policies.';
+      }
+    };
+
+    $('saveUsernameBtn').onclick = async () => {
+      const msg = $('usernameMessage');
+      const username = $('newAdminUsername').value.trim();
+      if(username.length < 3){ msg.textContent = 'Username must be at least 3 characters.'; return; }
+      try{
+        await saveSetting('username', username);
+        msg.textContent = 'Username changed successfully. Use the new username next time.';
+      }catch(error){
+        console.error(error);
+        msg.textContent = 'Could not change username. Check Supabase policies.';
+      }
+    };
+
+    $('savePasswordBtn').onclick = async () => {
+      const msg = $('passwordMessage');
+      const password = $('newAdminPassword').value;
+      const confirm = $('confirmAdminPassword').value;
+      if(password.length < 8){ msg.textContent = 'Password must be at least 8 characters.'; return; }
+      if(password !== confirm){ msg.textContent = 'Passwords do not match.'; return; }
+      try{
+        const {error} = await sb.auth.updateUser({password});
+        if(error) throw error;
+        $('newAdminPassword').value = '';
+        $('confirmAdminPassword').value = '';
+        msg.textContent = 'Password changed successfully.';
+      }catch(error){
+        console.error(error);
+        msg.textContent = 'Could not change password: ' + (error.message || 'Supabase Auth error');
+      }
+    };
+
+    /* INITIAL SUPABASE LOAD */
+
+    loadSettings();
+    loadShared();
+
+  })();
+
+  </script>
+
+</body>
+</html>
