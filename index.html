@@ -1612,6 +1612,71 @@
       }
     }
 
+
+    /* ================= MOBILE HEADER & PASSWORD COMFORT FIX ================= */
+    @media(max-width:760px){
+      .nav{
+        grid-template-columns:minmax(0,1fr) auto;
+        grid-template-rows:auto auto;
+        align-items:center;
+      }
+
+      /* Search bar FIRST on mobile */
+      .global-search{
+        grid-column:1 / -1;
+        grid-row:1;
+        width:100%;
+        min-width:0;
+        order:0;
+      }
+
+      .brand{
+        grid-column:1;
+        grid-row:2;
+        min-width:0;
+      }
+
+      /* Admin button BELOW the search bar */
+      .nav-actions{
+        grid-column:2;
+        grid-row:2;
+        justify-self:end;
+        min-width:0;
+      }
+
+      .global-search input{
+        width:100%;
+        max-width:100%;
+      }
+
+      /* Password change section: stack everything vertically */
+      .settings-row,
+      .settings-row.settings-stack{
+        display:grid;
+        grid-template-columns:minmax(0,1fr);
+        width:100%;
+      }
+
+      .settings-row input,
+      .settings-row button{
+        width:100%;
+        min-width:0;
+        max-width:100%;
+      }
+
+      .settings-card{
+        width:100%;
+        overflow:hidden;
+      }
+
+      #newAdminPassword,
+      #confirmAdminPassword,
+      #savePasswordBtn{
+        min-width:0;
+        width:100%;
+      }
+    }
+
     @media(prefers-reduced-motion:reduce){
       *,
       *::before,
@@ -1621,6 +1686,48 @@
         animation-duration:.01ms!important;
       }
     }
+  
+    /* ================= FINAL MOBILE HEADER + PASSWORD FIX ================= */
+    @media(max-width:760px){
+      .nav{
+        display:grid;
+        grid-template-columns:minmax(0,1fr) auto;
+        grid-template-areas:
+          "brand admin"
+          "search search";
+        gap:10px;
+        width:calc(100% - 18px);
+        padding:9px 0 12px;
+      }
+      .brand{grid-area:brand;min-width:0}
+      .nav-actions{grid-area:admin;display:flex;justify-content:flex-end;align-items:center}
+      .global-search{grid-area:search;grid-column:auto;width:100%;min-width:0}
+      .admin-login-btn{min-height:40px;padding:0 12px;font-size:10px;white-space:nowrap}
+      .global-search input{width:100%;height:46px;font-size:12px}
+
+      .settings-row,.settings-row.settings-stack{
+        display:flex;
+        flex-direction:column;
+        width:100%;
+        max-width:100%;
+        gap:10px;
+      }
+      .settings-row input,.settings-row.settings-stack input,#newAdminPassword,#confirmAdminPassword{
+        width:100%;max-width:100%;min-width:0;min-height:44px;box-sizing:border-box;
+      }
+      .settings-row button,.settings-row.settings-stack button,#savePasswordBtn{
+        width:100%;min-height:44px;box-sizing:border-box;
+      }
+      .settings-card,.admin-view,.admin-content,.admin-modal{max-width:100%;box-sizing:border-box}
+    }
+    @media(max-width:390px){
+      .nav{width:calc(100% - 14px);gap:8px}
+      .brand img{width:46px;height:46px}
+      .brand strong{font-size:13px}
+      .admin-login-btn{min-height:38px;padding:0 10px;font-size:9px}
+      .global-search input{height:44px;font-size:11px}
+    }
+
   </style>
 </head>
 
