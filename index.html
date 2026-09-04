@@ -1728,6 +1728,20 @@
       .global-search input{height:44px;font-size:11px}
     }
 
+  
+    /* FINAL MOBILE LAYOUT OVERRIDE */
+    @media(max-width:760px){
+      .nav{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;grid-template-areas:"search search" "brand admin"!important;gap:10px!important;width:calc(100% - 18px)!important;padding:9px 0 12px!important;}
+      .global-search{grid-area:search!important;width:100%!important;min-width:0!important;}
+      .brand{grid-area:brand!important;min-width:0!important;}
+      .nav-actions{grid-area:admin!important;display:flex!important;justify-content:flex-end!important;align-items:center!important;min-width:0!important;}
+      .global-search input{width:100%!important;max-width:100%!important;box-sizing:border-box!important;height:46px!important;}
+      .settings-row,.settings-row.settings-stack{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;gap:10px!important;}
+      .settings-row input,.settings-row.settings-stack input,#newAdminPassword,#confirmAdminPassword{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;}
+      .settings-row button,.settings-row.settings-stack button,#savePasswordBtn{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;}
+      .settings-card,.admin-view,.admin-content,.admin-modal{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}
+    }
+
   </style>
 </head>
 
@@ -2158,10 +2172,6 @@
             <label class="color-control">
               <span>Page Background</span>
               <input id="themeBackground" type="color" value="#faf7fc">
-            </label>
-            <label class="color-control">
-              <span>Card Surface</span>
-              <input id="themeSurface" type="color" value="#ffffff">
             </label>
           </div>
           <button class="admin-primary" id="saveThemeBtn" type="button">Save Colors</button>
