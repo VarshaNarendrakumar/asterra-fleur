@@ -3389,17 +3389,17 @@
 
     async function saveSetting(key,value){
       const updated_at = new Date().toISOString();
-
-      // key is the primary key in site_settings, so upsert safely handles
-      // both first-time saves and later updates.
-      const {error} = await sb
-        .from('site_settings')
-        .upsert(
-          {key, value, updated_at},
-          {onConflict:'key'}
-        );
-
+      const {data,error} = await sb.from('site_settings')
+        .update({value,updated_at})
+        .eq('key',key)
+        .select('key')
+        .maybeSingle();
       if(error) throw error;
+      if(!data){
+        const {error:insertError} = await sb.from('site_settings')
+          .insert({key,value,updated_at});
+        if(insertError) throw insertError;
+      }
     }
 
     function remove(code){
@@ -4535,21 +4535,15 @@
         const settings = {
           primary: $('themePrimary').value,
           accent: $('themeAccent').value,
-          background: $('themeBackground').value
+          background: $('themeBackground').value,
+          surface: $('themeSurface').value
         };
-
-        // Save only the three color controls that actually exist in the page.
-        // The old code tried to read #themeSurface, which does not exist and
-        // caused the whole save operation to fail before Supabase was called.
-        for(const [key,value] of Object.entries(settings)){
-          await saveSetting(key,value);
-        }
-
+        for(const [key,value] of Object.entries(settings)) await saveSetting(key,value);
         applyTheme({...DEFAULT_SETTINGS,...settings});
-        msg.textContent = 'Colors saved successfully.';
+        msg.textContent = 'Colors saved to Supabase.';
       }catch(error){
-        console.error('Color save failed:', error);
-        msg.textContent = 'Could not save colors: ' + (error.message || 'Unknown error');
+        console.error(error);
+        msg.textContent = 'Could not save colors. Check Supabase policies.';
       }
     };
 
